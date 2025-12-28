@@ -1,6 +1,6 @@
 export default function Hero() {
     return (
-        <section className="relative flex min-h-[70vh] flex-col items-center justify-center bg-background px-4 sm:px-6 md:px-12 lg:px-24 py-16 sm:py-24 text-center">
+        <section className="relative flex md:min-h-[70vh] flex-col items-center justify-center bg-background px-4 sm:px-6 md:px-12 lg:px-24 py-16 sm:py-24 text-center">
 
             {/* Resplandor de fondo sutil */}
             <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -33,7 +33,7 @@ export default function Hero() {
                         />
 
                         {/* Botón dentro del Input (Desktop) */}
-                        <button className="absolute right-2 sm:right-2 md:right-4 rounded-xl bg-primary px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-bold text-primary-foreground hover:opacity-90 transition-all">
+                        <button className="absolute right-2 sm:right-2 md:right-4 rounded-xl bg-primary px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-bold text-primary-foreground hover:opacity-90 transition-all cursor-pointer">
                             Buscar
                         </button>
 
@@ -50,13 +50,13 @@ export default function Hero() {
 
                 {/* Acciones Secundarias */}
                 <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-                    <button className="text-sm sm:text-base font-semibold text-foreground hover:text-primary transition-colors">
+                    <button className="text-sm sm:text-base font-semibold text-foreground hover:text-primary transition-colors cursor-pointer hover:color-primary">
                         Ver todas las categorías
                     </button>
-                    <span className="hidden sm:inline text-muted-foreground text-sm">|</span>
-                    <button className="text-sm sm:text-base font-semibold text-foreground hover:text-primary transition-colors">
+                    {/* <span className="hidden sm:inline text-muted-foreground text-sm">|</span> */}
+                    {/* <button className="text-sm sm:text-base font-semibold text-foreground hover:text-primary transition-colors">
                         Ofertas del día
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </section>

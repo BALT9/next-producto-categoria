@@ -32,6 +32,20 @@
   border-radius: var(--radius);
 }
 
+/* globals.css o tu CSS global */
+.hover\:text-primary:hover {
+  color: var(--primary);
+}
+
+.hover\:bg-primary:hover {
+  background-color: var(--primary);
+}
+
+.text-primary {
+  color: var(--primary) !important;
+}
+
+
 /* Body base */
 body {
   font-family: var(--font-geist-sans), sans-serif;

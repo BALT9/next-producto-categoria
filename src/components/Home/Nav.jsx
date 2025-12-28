@@ -9,15 +9,16 @@ export default function Nav() {
     const toggleMenu = () => setIsOpen(!isOpen);
 
     const menuLinks = [
-        { name: "Inicio", href: "#" },
-        { name: "Catálogo", href: "#" },
-        { name: "Ofertas", href: "#" },
-        { name: "Contacto", href: "#" },
+        { name: "Inicio", href: "/" },
+        { name: "Catálogo", href: "#catalogo" },
+        // { name: "Ofertas", href: "/ofertas" },
+        { name: "Contacto", href: "#contacto" }, // Esto irá al footer
     ];
+
 
     return (
         <>
-            <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
+            <nav className="sticky top-0 z-50 w-full border-b backdrop-blur md:px-24">
                 <div className="container mx-auto flex h-16 items-center justify-between px-4">
 
                     {/* Logo */}
@@ -80,16 +81,28 @@ export default function Nav() {
                 </div>
 
                 <div className="flex flex-col gap-4">
-                    {menuLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            onClick={toggleMenu} // Cierra el menú al hacer click
-                            className="text-lg font-semibold border-b border-border pb-2 hover:text-primary"
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
+                    {menuLinks.map((link) =>
+                        link.href.startsWith("#") ? (
+                            <a
+                                key={link.name}
+                                href={link.href}
+                                onClick={toggleMenu} // Cierra el menú en mobile
+                                className="text-lg font-semibold border-b border-border pb-2 hover:text-primary"
+                            >
+                                {link.name}
+                            </a>
+                        ) : (
+                            <Link
+                                key={link.name}
+                                href={link.href}
+                                onClick={toggleMenu}
+                                className="text-lg font-semibold border-b border-border pb-2 hover:text-primary"
+                            >
+                                {link.name}
+                            </Link>
+                        )
+                    )}
+
 
                     <Link
                         href="/dashboard"
