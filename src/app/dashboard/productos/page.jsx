@@ -5,9 +5,10 @@ import { useDashboard } from "@/context/DashboardContext";
 import FormProd from "@/components/dashboard/FomProduct";
 
 export default function ProductosPanel() {
-    const { productos, loading } = useDashboard();
+    const { productos, loading, removeProduct } = useDashboard();
     const [searchTerm, setSearchTerm] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingProduct, setEditingProduct] = useState(null);
 
     // Filtrado de productos
     const filteredProducts = productos.filter((prod) =>
@@ -24,7 +25,10 @@ export default function ProductosPanel() {
                 </div>
                 <button
                     className="bg-primary text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-lg shadow-primary/25 hover:opacity-90 transition-all flex items-center gap-2 w-fit"
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => {
+                        setEditingProduct(null); // Nuevo producto
+                        setIsModalOpen(true);
+                    }}
                 >
                     <span>+</span> Nuevo Producto
                 </button>
@@ -70,8 +74,32 @@ export default function ProductosPanel() {
                                         <td className="px-6 py-4 text-sm font-bold text-slate-900">${prod.price}</td>
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex justify-end gap-2">
-                                                <button className="p-2 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 text-blue-600 shadow-sm">✏️</button>
-                                                <button className="p-2 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 text-red-500 shadow-sm">🗑️</button>
+                                                {/* Botón Editar */}
+                                                <button
+                                                    className="p-2 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 text-blue-600 shadow-sm"
+                                                    onClick={() => {
+                                                        setEditingProduct(prod);
+                                                        setIsModalOpen(true);
+                                                    }}
+                                                >
+                                                    ✏️
+                                                </button>
+                                                {/* Botón Eliminar */}
+                                                <button
+                                                    className="p-2 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 text-red-500 shadow-sm"
+                                                    onClick={async () => {
+                                                        if (confirm("¿Estás seguro de eliminar este producto?")) {
+                                                            try {
+                                                                await removeProduct(prod.id);
+                                                                alert("✅ Producto eliminado");
+                                                            } catch (error) {
+                                                                alert("❌ Error al eliminar el producto");
+                                                            }
+                                                        }
+                                                    }}
+                                                >
+                                                    🗑️
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
@@ -95,34 +123,29 @@ export default function ProductosPanel() {
                     <div className="bg-white rounded-3xl shadow-2xl w-full max-w-3xl mx-4 md:mx-0 p-6 relative max-h-[90vh] overflow-y-auto">
                         {/* Botón de cerrar */}
                         <button
-                            className="
-                                        absolute top-4 right-4 
-                                        w-10 h-10 
-                                        flex items-center justify-center 
-                                        rounded-full 
-                                        bg-red-100 hover:bg-slate-200 
-                                        text-slate-600 hover:text-slate-800 
-                                        text-2xl font-bold 
-                                        transition-colors duration-200
-                                        shadow-md
-                                        focus:outline-none focus:ring-2 focus:ring-primary/50
-                                    "
+                            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-red-100 hover:bg-slate-200 text-slate-600 hover:text-slate-800 text-2xl font-bold transition-colors duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-primary/50"
                             onClick={() => setIsModalOpen(false)}
                             aria-label="Cerrar modal"
                         >
                             ×
                         </button>
 
-
-                        {/* Título opcional dentro del modal */}
-                        <h2 className="text-2xl text-center font-bold text-slate-900 mb-4">Nuevo Producto</h2>
+                        {/* Título modal */}
+                        <h2 className="text-2xl text-center font-bold text-slate-900 mb-4">
+                            {editingProduct ? "Editar Producto" : "Nuevo Producto"}
+                        </h2>
 
                         {/* Formulario */}
-                        <FormProd closeModal={() => setIsModalOpen(false)} />
+                        <FormProd
+                            initialData={editingProduct}
+                            closeModal={() => {
+                                setIsModalOpen(false);
+                                setEditingProduct(null);
+                            }}
+                        />
                     </div>
                 </div>
             )}
-
         </div>
     );
 }
