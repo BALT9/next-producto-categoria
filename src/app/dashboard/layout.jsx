@@ -14,7 +14,7 @@ export default function DashboardLayout({ children }) {
         // { name: "Dashboard", href: "/dashboard", icon: "📊" },
         { name: "Productos", href: "/dashboard/productos", icon: "📦" },
         { name: "Categorías", href: "/dashboard/categorias", icon: "🏷️" },
-        { name: "Pedidos", href: "/dashboard/pedidos", icon: "🚚" },
+        // { name: "Pedidos", href: "/dashboard/pedidos", icon: "🚚" },
     ];
 
     const NavContent = () => (

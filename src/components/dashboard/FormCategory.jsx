@@ -1,17 +1,18 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDashboard } from "@/context/DashboardContext";
 
 export default function FormCategory({ category, closeModal }) {
     const { addCategory, editCategory } = useDashboard();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const {
         register,
         handleSubmit,
         reset,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm({
         defaultValues: {
             name: "",
@@ -19,7 +20,7 @@ export default function FormCategory({ category, closeModal }) {
         },
     });
 
-    // Si es edición, cargamos datos
+    // Cargar datos si es edición
     useEffect(() => {
         if (category) {
             reset({
@@ -30,6 +31,7 @@ export default function FormCategory({ category, closeModal }) {
     }, [category, reset]);
 
     const onSubmit = async (data) => {
+        setIsSubmitting(true);
         try {
             if (category) {
                 await editCategory(category.id, data);
@@ -39,6 +41,9 @@ export default function FormCategory({ category, closeModal }) {
             closeModal();
         } catch (error) {
             console.error("Error guardando categoría:", error);
+            alert("❌ Ocurrió un error al guardar la categoría");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -67,11 +72,10 @@ export default function FormCategory({ category, closeModal }) {
                         type="text"
                         placeholder="Ej. Electrónica"
                         className={`w-full px-4 py-3 rounded-xl border bg-slate-50 outline-none transition-all
-                        ${
-                            errors.name
+                        ${errors.name
                                 ? "border-red-400 focus:ring-red-200"
                                 : "border-slate-200 focus:ring-primary/20"
-                        }`}
+                            }`}
                         {...register("name", {
                             required: "El nombre es obligatorio",
                             minLength: {

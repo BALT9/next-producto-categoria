@@ -79,7 +79,11 @@ export default function CategoriasPanel() {
                                 </button>
                                 <button
                                     className="p-2 text-xs font-bold bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition-colors"
-                                    onClick={() => removeCategory(cat.id)}
+                                    onClick={() => {
+                                        if (window.confirm("¿Estás seguro de eliminar esta categoría? Los productos asociados podrían verse afectados.")) {
+                                            removeCategory(cat.id);
+                                        }
+                                    }}
                                 >
                                     🗑️
                                 </button>
@@ -113,9 +117,10 @@ export default function CategoriasPanel() {
                         </button>
                         <FormCategory
                             category={selectedCategory}
+                            addCategory={addCategory}
+                            editCategory={editCategory}
                             closeModal={closeModal}
                         />
-
                     </div>
                 </div>
             )}
