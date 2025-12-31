@@ -69,7 +69,7 @@ export default function ProductosPanel() {
                                         </td>
                                         <td className="px-6 py-4 text-sm font-bold text-slate-900">${prod.price}</td>
                                         <td className="px-6 py-4 text-right">
-                                            <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <div className="flex justify-end gap-2">
                                                 <button className="p-2 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 text-blue-600 shadow-sm">✏️</button>
                                                 <button className="p-2 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 text-red-500 shadow-sm">🗑️</button>
                                             </div>

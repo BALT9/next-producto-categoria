@@ -18,18 +18,20 @@ export default function FormProd() {
     // const categories = ["Electrónica", "Muebles", "Accesorios", "Ropa", "Deportes"];
 
     const onSubmit = async (data) => {
+        console.log(data);
         setIsSubmitting(true);
         try {
             await addProduct({
                 name: data.name,
                 description: data.description,
                 price: parseFloat(data.price),
-                categoryId: parseInt(data.category),
+                categoryId: parseInt(data.categoryId), // ✅ aquí debe coincidir con el name del select
             });
             alert("🚀 Producto guardado con éxito");
             reset();
         } catch (error) {
             alert("❌ Error al guardar el producto");
+            console.error(error);
         } finally {
             setIsSubmitting(false);
         }
@@ -127,15 +129,12 @@ export default function FormProd() {
                 <div className="space-y-2">
                     <label className="text-[13px] font-black uppercase tracking-wider text-slate-500 ml-1">Detalles técnicos</label>
                     <textarea
-                        {...register("description", {
-                            required: "La descripción es necesaria",
-                            minLength: { value: 10, message: "Mínimo 10 caracteres" }
-                        })}
+                        {...register("description")}
                         rows="4"
                         placeholder="Describe las ventajas competitivas del producto..."
                         className={`w-full px-5 py-4 rounded-2xl border ${errors.description ? 'border-red-500 bg-red-50' : 'border-slate-200 bg-slate-50'} focus:bg-white focus:ring-4 focus:ring-primary/10 outline-none transition-all resize-none font-medium text-slate-600`}
                     ></textarea>
-                    {errors.description && <p className="text-red-500 text-xs font-bold mt-1 ml-2">⚠ {errors.description.message}</p>}
+                    {/* {errors.description && <p className="text-red-500 text-xs font-bold mt-1 ml-2">⚠ {errors.description.message}</p>} */}
                 </div>
 
                 {/* Footer del Formulario */}
